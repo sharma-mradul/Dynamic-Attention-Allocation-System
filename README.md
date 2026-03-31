@@ -239,3 +239,5 @@ See `data/sample_tasks.csv` and `data/sample_tasks.json` for examples.
 ## Project report
 
 See `PROJECT_REPORT.md` for the latest summary of what was done and why.
+Name - Mradul Sharma
+Regestration number - 25BCE10205
