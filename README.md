@@ -1,243 +1,141 @@
 ﻿# 📋 Task Priority Predictor
 
-Ever get stuck deciding which task to do first? This ML project helps you figure that out! 
+Have you ever had multiple tasks and no idea where to start?  
+I built this project to solve exactly that problem.
 
-## 🎯 What It Does
+This is a machine learning-based system that helps decide which task should be done first based on different factors like urgency, importance, and time left.
 
-Enter details about your tasks (like how hard they are, how important, and how much time you have), and the system will:
-- **Calculates a priority score** using a formula
-- **Uses machine learning** to predict if it's LOW, MEDIUM, or HIGH priority
-- **Ranks all your tasks** from most to least important
-- **Shows you what to work on first!**
+---
 
-Just give it:
-- How hard is the task? (1-10)
-- How much time do you have? (in hours)
-- How important is it? (1-10)
-- Did you delay this task before? (yes/no)
+## 🎯 What This Project Does
 
-## 📁 What's Inside
+The system takes details about your tasks and:
+
+- Predicts whether a task is LOW, MEDIUM, or HIGH priority
+- Assigns a score to each task
+- Compares multiple tasks
+- Suggests which task you should focus on first
+
+Instead of guessing what to do, the model gives a structured recommendation.
+
+---
+
+## 🧠 Inputs Used
+
+For each task, the following inputs are required:
+
+- Urgency (1–10) → how soon it needs to be done  
+- Difficulty (1–10) → how hard the task is  
+- Time Left (in hours) → remaining time before deadline  
+- Importance (1–10) → how important the task is  
+- Past Delay (0 or 1) → whether similar tasks were delayed before  
+
+---
+
+## 📁 Project Structure
 
 ```
 ├── data/
-│   └── tasks.csv              # Example training data (500 tasks)
+│   └── data.csv              # Dataset used for training
 │
-├── models/
-│   └── decision_tree.pkl      # The trained AI model
+├── model/
+│   └── model.pkl             # Trained ML model
 │
 ├── src/
-│   ├── train.py               # Trains the ML model
-│   └── predict.py             # Predicts your task priorities
+│   ├── train.py              # Model training script
+│   ├── predict.py            # Prediction logic
+│   ├── task_advisor.py       # Multi-task decision system
+│   └── batch_advisor.py      # Batch processing
 │
-└── requirements.txt
+├── demo.py                   # Demo with sample scenarios
+├── requirements.txt
+└── README.md
 ```
 
-## 🚀 Quick Start
+---
 
-**Step 1: Install stuff**
-```bash
+## 🚀 How to Run
+
+Step 1: Install dependencies  
 pip install -r requirements.txt
-```
 
-**Step 2: Train the model (one time)**
-```bash
+Step 2: Train the model  
 python src/train.py
-```
 
-**Step 3: Use it!**
-```bash
+Step 3: Run prediction  
 python src/predict.py
-```
+
+---
+
+## 🔥 Multi-Task Decision System
+
+The main upgrade in this project is the ability to handle multiple tasks at once.
+
+You can input several tasks, and the system will:
+
+- Predict priority for each task  
+- Rank all tasks  
+- Show a clear recommendation  
+
+---
 
 ## 📝 Example
 
-```
-How many tasks? 3
+1. DSA Assignment – HIGH  
+2. Database Project – MEDIUM  
+3. Watch Lecture – LOW  
 
-Task 1: Study
-  Difficulty? 8
-  Time left (hours)? 2
-  Importance? 9
-  Delayed before? 1
+Recommended Task: DSA Assignment
 
-Task 2: Exercise  
-  Difficulty? 3
-  Time left (hours)? 1
-  Importance? 5
-  Delayed before? 0
+---
 
---- RESULTS ---
+## ⚙️ Model Details
 
-1. Study - HIGH
-2. Exercise - MEDIUM
+- Model used: Decision Tree Classifier  
+- Problem type: Supervised Learning (Classification)  
+- Output classes: LOW, MEDIUM, HIGH  
 
-✓ Do this first: Study
-```
+The dataset was manually created to reflect real-life task scenarios.
 
-## 📦 What You Need
+---
 
-- pandas (for handling data)
-- scikit-learn (the ML library)
-- joblib (to save/load the model)
+## 📊 How It Works (Simple Explanation)
 
-## Features
+1. Input task details  
+2. Model predicts priority  
+3. Priority is converted to a score  
+4. Tasks are ranked  
+5. Top task is recommended  
 
-- **Multi-task support**: Handle 3-10 tasks simultaneously
-- **ML-powered predictions**: Uses trained Random Forest classifier
-- **Feature engineering**: Creates 9 derived features from 5 input attributes
-- **Explainable AI**: Generates human-readable explanations
-- **Ranked recommendations**: Intelligent sorting based on multiple factors
-- **Actionable insights**: Specific next steps for each priority level
+---
 
-## Requirements
+## 💡 Why I Built This
 
-- Python 3.8+
-- scikit-learn 1.3.2+
-- pandas 2.0.3+
-- numpy 1.24.3+
-- joblib 1.3.1+
+I often found it difficult to decide what to do first when multiple tasks were pending.  
+This project is an attempt to use machine learning to support better decision-making.
 
-See LICENSE file for details.
+---
 
-### Train only
+## 🚀 Future Improvements
 
-```bash
-python src/train.py --data data/data.csv --model model/model.pkl --rebuild
-```
+- Add a UI (Streamlit or web app)  
+- Improve dataset size  
+- Try advanced models like Random Forest  
+- Add explainability (why a task is high priority)  
 
-### Prediction
+---
 
-#### Single input (interactive fallback)
+## 📌 Notes
 
-```bash
-python src/predict.py --mode single
-```
+- Dataset is manually created for learning purposes  
+- Model is simple but effective for demonstration  
+- Focus is on combining ML with decision-making logic  
 
-or values with flags:
+---
 
-```bash
-python src/predict.py --mode single --urgency 8 --difficulty 5 --time_left 10 --importance 9 --past_delay 1
-```
+## 📄 Project Report
 
-#### Batch input
+Detailed explanation is available in PROJECT_REPORT.md
 
-```bash
-python src/predict.py --mode batch --input data/data.csv --output data/results.csv
-```
-
-## Key details
-
-- Base features: `urgency`, `difficulty`, `time_left`, `importance`, `past_delay`
-- Derived features: `risk`, `stress`, `urgency_adjusted`, `time_pressure`
-- Model: `RandomForestClassifier` with balanced class weights
-
-## What is in `data/` and `model/`
-
-- `data/data.csv`: contains task samples and ground truth priorities (generated if absent)
-- `model/model.pkl`: saved trained model (produced by `train.py`)
-
-## Suggested enhancements
-
-- Add unit/integration tests (`tests/`)
-- Add GitHub Actions CI for `pytest`
-- Add model explainability (e.g., SHAP)
-- Add `pyproject.toml` for packaging
-
-## 🎯 NEW: Multi-Task Decision Making Assistant
-
-The system now includes an **advanced decision-making assistant** that handles multiple tasks with intelligent prioritization, ranking, and recommendations.
-
-### Features
-
-✅ **Multi-Task Input** - Accept 3-10 tasks interactively or via batch processing
-✅ **Intelligent Ranking** - Rank tasks by predicted priority + additional factors
-✅ **Smart Explanations** - Auto-generated explanations for each prediction
-✅ **Formatted Output** - Clean, professional terminal display with visual indicators
-✅ **Batch Processing** - Load from CSV or JSON files
-✅ **Comparison Insights** - Shows why one task ranks higher than another
-✅ **Action Recommendations** - Clear next steps with reasoning
-
-### Quick Start
-
-**Interactive Mode:**
-```bash
-python src/task_advisor.py
-```
-
-**Batch Processing (Sample):**
-```bash
-python src/batch_advisor.py --mode sample
-```
-
-**Demo with 3 Scenarios:**
-```bash
-python demo.py
-```
-
-**From CSV:**
-```bash
-python src/batch_advisor.py --mode csv --input data/sample_tasks.csv
-```
-
-**From JSON:**
-```bash
-python src/batch_advisor.py --mode json --input data/sample_tasks.json --output-csv results.csv
-```
-
-### Example Output
-
-```
-📋 RANKED TASKS:
-
-1. DSA Assignment – HIGH (Score: 90)
-   Normalized Score: 100/100
-   📊 Urgency: 9/10 | Difficulty: 8/10 | Importance: 9/10 | Time Left: 2.0h
-   💡 High urgency (9/10) | High importance (9/10) | Very limited time (2.0 hours) | Previously delayed
-
-2. Database Project – MEDIUM (Score: 60)
-   Normalized Score: 66/100
-   📊 Urgency: 7/10 | Difficulty: 6/10 | Importance: 8/10 | Time Left: 5.0h
-   💡 High urgency (7/10) | High importance (8/10)
-
-3. Watch Lecture – LOW (Score: 30)
-   Normalized Score: 33/100
-   📊 Urgency: 3/10 | Difficulty: 2/10 | Importance: 5/10 | Time Left: 24.0h
-   💡 Low urgency (3/10) | Plenty of time available (24.0 hours)
-
-✅ RECOMMENDED TASK: DSA ASSIGNMENT
-Priority: HIGH | Score: 90/90 | Normalized: 100/100
-```
-
-### New Modules
-
-- **`src/task_advisor.py`** - Main interactive assistant for multi-task prioritization
-- **`src/batch_advisor.py`** - Batch processing for CSV/JSON inputs
-- **`demo.py`** - Interactive demonstration with 3 real-world scenarios
-- **`USAGE_GUIDE.md`** - Complete documentation and examples
-
-### Input Format
-
-Tasks require these attributes:
-- `task_name` - Name of the task
-- `urgency` - 1-10 scale (10 = most urgent)
-- `difficulty` - 1-10 scale (10 = hardest)
-- `time_left` - Hours until deadline
-- `importance` - 1-10 scale (10 = most important)
-- `past_delay` - 0 or 1 (previously delayed?)
-
-See `data/sample_tasks.csv` and `data/sample_tasks.json` for examples.
-
-### How It Works
-
-1. **Load Model** - Uses trained Random Forest from `model/model.pkl`
-2. **Predict** - Predicts priority (LOW/MEDIUM/HIGH) for each task
-3. **Score** - Converts priority to numerical score (LOW=30, MEDIUM=60, HIGH=90)
-4. **Rank** - Sorts tasks by score, importance, urgency
-5. **Explain** - Generates reasons for each prediction
-6. **Recommend** - Highlights top task and provides next steps
-
-## Project report
-
-See `PROJECT_REPORT.md` for the latest summary of what was done and why.
 Name - Mradul Sharma
 Regestration number - 25BCE10205
